@@ -5,7 +5,7 @@ by means of the JaCaMo platform for the development of multiagent organizations.
 
 The JaCaMo Project official webpage is: [http://jacamo.sourceforge.net/](http://jacamo.sourceforge.net/)
 
-The BPMN representation of the Incident Management Process was is available at:
+The BPMN representation of the Incident Management Process is available at:
 [https://www.businessprocessincubator.com/content/incident-management-as-detailed-collaboration/](https://www.businessprocessincubator.com/content/incident-management-as-detailed-collaboration/)
 
 ### Contacts
