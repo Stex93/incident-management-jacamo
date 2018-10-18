@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet href="http://moise.sourceforge.net/xml/os.xsl" type="text/xsl" ?>
+
+<organisational-specification
+    id="incident"
+    os-version="0.8"
+
+    xmlns='http://moise.sourceforge.net/os'
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xsi:schemaLocation='http://moise.sourceforge.net/os
+                        http://moise.sourceforge.net/xml/os.xsd' >
+
+<structural-specification>
+
+<role-definitions>
+	<role id="boss" />
+    <role id="customer" />
+    <role id="key_account_manager" />
+    <role id="first_level_support" />
+    <role id="second_level_support" />
+    <role id="developer" />
+</role-definitions>
+
+<group-specification id="incident_management_group">
+    <roles>
+        <role id="boss" min="1" max="1"/>    
+        <role id="customer" min="1" max="1"/>
+        <role id="key_account_manager" min="1" max="1"/>
+        <role id="first_level_support" min="1" max="1"/>
+        <role id="second_level_support" min="1" max="1"/>
+        <role id="developer" min="1" max="1"/>
+    </roles>
+</group-specification>
+</structural-specification>
+
+<functional-specification>
+    <scheme id="scheme1">
+        <goal id="root1">
+            <plan operator="sequence">
+            	<goal id="have_problem"/>
+                <goal id="ask_description"/>
+                <goal id="send_description"/>
+                <goal id="explain_solution"/>
+            </plan>
+        </goal>
+
+        <mission id="m1" min="1" max="1">
+            <goal id="ask_description"/>
+            <goal id="explain_solution"/>
+        </mission>
+        <mission id="m2" min="1" max="1">
+        	<goal id="have_problem"/>
+            <goal id="send_description"/>
+            <goal id="root1"/>
+        </mission>
+    </scheme>
+    <scheme id="scheme2">
+       <goal id="root2">
+           <plan operator="sequence">
+               <goal id="ask_support_fls"/>
+               <goal id="handle_issue_1"/>
+               <goal id="provide_feedback_am"/>
+           </plan>
+       </goal>
+
+       <mission id="m3" min="1" max="1">
+           <goal id="ask_support_fls"/>
+       </mission>
+       <mission id="m4" min="1" max="1">
+           <goal id="handle_issue_1"/>
+           <goal id="provide_feedback_am"/>
+       </mission>
+   </scheme>
+   <scheme id="scheme3">
+       <goal id="root3">
+           <plan operator="sequence">
+               <goal id="ask_support_sls"/>
+               <goal id="handle_issue_2"/>
+               <goal id="finalize">
+               		<plan operator="choice">
+               			<goal id="provide_feedback_fls"/>
+               			<goal id="backlog_feedback">
+               				<plan operator="sequence">
+               					<goal id="insert_backlog" />
+               					<goal id="provide_feedback_fls" />
+               				</plan>
+               			</goal>
+               		</plan>
+               </goal>
+           </plan>
+       </goal>
+       <mission id="m5" min="1" max="1">
+           <goal id="ask_support_sls"/>
+       </mission>
+       <mission id="m6" min="1" max="1">
+           <goal id="handle_issue_2"/>
+           <goal id="provide_feedback_fls"/>
+           <goal id="insert_backlog"/>
+       </mission>
+   </scheme>
+   <scheme id="scheme4">
+       <goal id="root4">
+           <plan operator="sequence">
+               <goal id="ask_support_dev"/>
+               <goal id="examine_problem"/>
+               <goal id="provide_feedback_sls"/>
+           </plan>
+       </goal>
+       <mission id="m7" min="1" max="1">
+           <goal id="ask_support_dev"/>
+       </mission>
+       <mission id="m8" min="1" max="1">
+           <goal id="examine_problem"/>
+           <goal id="provide_feedback_sls"/>
+       </mission>
+   </scheme>
+</functional-specification>
+
+<normative-specification>
+
+    <norm id="n1" type="obligation" role="key_account_manager" mission="m1"/>
+    <norm id="n2" type="obligation" role="customer" mission="m2"/>
+    <norm id="n3" type="obligation" role="key_account_manager" mission="m3"/>
+    <norm id="n4" type="obligation" role="first_level_support" mission="m4"/>
+	<norm id="n5" type="obligation" role="first_level_support" mission="m5"/>
+	<norm id="n6" type="obligation" role="second_level_support" mission="m6"/>
+	<norm id="n7" type="obligation" role="second_level_support" mission="m7"/>
+	<norm id="n8" type="obligation" role="developer" mission="m8"/>
+
+</normative-specification>
+
+</organisational-specification>
