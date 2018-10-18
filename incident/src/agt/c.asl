@@ -13,16 +13,29 @@
        ?formationStatus(ok)[artifact_id(GrArtId)];
        addScheme(sch1)[artifact_id(GrArtId)].
 
-+!have_problem
-	<- println("I have a problem!").
++obligation(Ag,_,What,_)[artifact_id(ArtId)]
+	 : .my_name(Ag) &
+	   (satisfied(sch1,have_problem) = What | done(sch1,have_problem,Ag)=What) &
+	   play(Am,key_account_manager,incident_group)
+	<- println("I have a problem!");
+	   .send(Am,tell,have_problem);
+	   goalAchieved(have_problem)[artifact_id(ArtId)].
 
-+!send_description
-	<- println("Sending description...").
++obligation(Ag,_,What,_)[artifact_id(ArtId)]
+	 : .my_name(Ag) &
+	   (satisfied(sch1,send_description) = What | done(sch1,send_description,Ag)=What) &
+	   play(Am,key_account_manager,incident_group)
+	<- println("Sending description...");
+	   //.send(Am,tell,description(easy_problem));
+	   .send(Am,tell,description(hard_problem));
+	   goalAchieved(send_description)[artifact_id(ArtId)].
 
-+!root1
-	<- println("Problem solved. Thank you!").
++obligation(Ag,_,What,_)[artifact_id(ArtId)]
+     : .my_name(Ag) &
+	   (satisfied(sch1,root1) = What | done(sch1,root1,Ag)=What)
+	<- println("Problem solved. Thank you!")
+	   goalAchieved(root1)[artifact_id(ArtId)].
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }
-{ include("$jacamoJar/templates/org-obedient.asl") }
 { include("common.asl") }

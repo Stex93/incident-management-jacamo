@@ -13,7 +13,7 @@
        focus(OrgArtId);
        createGroup(incident_group, incident_management_group, GrArtId);
        debug(inspector_gui(on))[artifact_id(GrArtId)];
-       adoptRole(boss)[artifact_id(GrArtId)];
+       adoptRole(company)[artifact_id(GrArtId)];
        focus(GrArtId);
        
        .send(c, achieve, join(myorg,incident_group,customer));
@@ -21,11 +21,6 @@
        .send(fls, achieve, join(myorg,incident_group,first_level_support));
        .send(sls, achieve, join(myorg,incident_group,second_level_support));
        .send(dev, achieve, join(myorg,incident_group,developer)).
-       
-       //createScheme(sch1, scheme1, SchArtId);
-       //debug(inspector_gui(on))[artifact_id(SchArtId)];
-       //focus(SchArtId).
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }
-{ include("$moiseJar/asl/org-obedient.asl") }

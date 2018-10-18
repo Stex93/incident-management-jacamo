@@ -14,7 +14,7 @@
 <structural-specification>
 
 <role-definitions>
-	<role id="boss" />
+	<role id="company" />
     <role id="customer" />
     <role id="key_account_manager" />
     <role id="first_level_support" />
@@ -24,7 +24,7 @@
 
 <group-specification id="incident_management_group">
     <roles>
-        <role id="boss" min="1" max="1"/>    
+        <role id="company" min="1" max="1"/>    
         <role id="customer" min="1" max="1"/>
         <role id="key_account_manager" min="1" max="1"/>
         <role id="first_level_support" min="1" max="1"/>
