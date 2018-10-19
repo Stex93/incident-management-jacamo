@@ -24,6 +24,8 @@
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch1,send_description) = What | done(sch1,send_description,Ag)=What) &
+	   goalState(sch1,have_problem,_,_,satisfied) &
+	   goalState(sch1,ask_description,_,_,satisfied) &
 	   play(Am,key_account_manager,incident_group)
 	<- println("Sending description...");
 	   //.send(Am,tell,description(easy_problem));

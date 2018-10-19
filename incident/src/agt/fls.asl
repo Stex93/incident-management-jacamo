@@ -38,10 +38,6 @@
 	   println("Providing feedback to key account manager...");
 	   .send(Am,tell,provide_feedback_am);
 	   goalAchieved(provide_feedback_am)[artifact_id(ArtId)].
-
-+!ask_support_sls
-	 : true
-	<- println("Asking second level support...").
 	
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
