@@ -26,7 +26,4 @@ mas incident {
     
     agent dev
 
-    
-    asl-path:  src/agt, src/agt/inc
-
 }
