@@ -1,5 +1,11 @@
 can_handle(easy_problem).
 
++oblUnfulfilled(obligation(c,_,done(_,send_description,c),_))
+	 : goalState(sch1,have_problem,_,_,satisfied) &
+	   goalState(sch1,ask_description,_,_,satisfied)
+	<- println("Obligation to send_description unfulfilled by c. Asking why...");
+	   .send(c,tell,requestProof(send_description)).
+
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch1,ask_description) = What | done(sch1,ask_description,Ag)=What) &

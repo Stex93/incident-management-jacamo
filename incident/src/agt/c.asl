@@ -27,10 +27,36 @@
 	   goalState(sch1,have_problem,_,_,satisfied) &
 	   goalState(sch1,ask_description,_,_,satisfied) &
 	   play(Am,key_account_manager,incident_group)
-	<- println("Sending description...");
+	<- //println("Sending description...");
 	   //.send(Am,tell,description(easy_problem));
-	   .send(Am,tell,description(hard_problem));
-	   goalAchieved(send_description)[artifact_id(ArtId)].
+	   //.send(Am,tell,description(hard_problem));
+	   //goalAchieved(send_description)[artifact_id(ArtId)].
+	   println("Cannot send description :(").
+
++oblUnfulfilled(obligation(c,_,done(_,send_description,c),_))
+	 : goalState(sch1,have_problem,_,_,satisfied) &
+	   goalState(sch1,ask_description,_,_,satisfied)
+	<- +obligationUnfulfilled(send_description).
+	
++requestProof(send_description)
+	 : goalState(sch1,have_problem,_,_,satisfied) &
+	   goalState(sch1,ask_description,_,_,satisfied) &
+	   obligationUnfulfilled(send_description) &
+	   play(Am,key_account_manager,incident_group)
+	<- .send(Am,tell,proof("System failure"));
+	   println("Proof requested! Failure due to system fault!").
+	   
++obligation(Ag,_,What,_)[artifact_id(ArtId)]
+	 : .my_name(Ag) &
+	   (satisfied(sch1,send_description) = What | done(sch1,send_description,Ag)=What) &
+	   goalState(sch1,have_problem,_,_,satisfied) &
+	   goalState(sch1,ask_description,_,_,satisfied) &
+	   play(Am,key_account_manager,incident_group)
+	<- //println("Sending description...");
+	   //.send(Am,tell,description(easy_problem));
+	   //.send(Am,tell,description(hard_problem));
+	   //goalAchieved(send_description)[artifact_id(ArtId)].
+	   println("Cannot send description").
 
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
      : .my_name(Ag) &
