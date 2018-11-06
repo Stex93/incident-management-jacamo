@@ -39,9 +39,9 @@
         <goal id="root1">
             <plan operator="sequence">
             	<goal id="have_problem"/>
-                <goal id="ask_description"/>
+                <goal id="ask_description" ttf="5 seconds"/>
                 <goal id="send_description" ttf="5 seconds"/>
-                <goal id="explain_solution"/>
+                <goal id="explain_solution" ttf="5 seconds"/>
             </plan>
         </goal>
 

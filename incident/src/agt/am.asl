@@ -1,10 +1,10 @@
 can_handle(easy_problem).
 
-+oblUnfulfilled(obligation(c,_,done(_,send_description,c),_))
++obligationUnfulfilled(obligation(c,X,done(Y,send_description,c),Z))
 	 : goalState(sch1,have_problem,_,_,satisfied) &
 	   goalState(sch1,ask_description,_,_,satisfied)
 	<- println("Obligation to send_description unfulfilled by c. Asking why...");
-	   .send(c,tell,requestProof(send_description)).
+	   .send(c,tell,requestProof(obligation(c,X,done(Y,send_description,c),Z))).
 
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
@@ -14,6 +14,15 @@ can_handle(easy_problem).
 	<- println("Asking description...");
 	   .send(Customer,tell,ask_description);
 	   goalAchieved(ask_description)[artifact_id(ArtId)].
+	   //println("Cannot ask for description").
+
++requestProof(obligation(Me,_,done(_,ask_description,Me),_))
+	 : goalState(sch1,have_problem,_,_,satisfied) &
+	   obligationUnfulfilled(obligation(Me,_,done(_,ask_description,Me),_)) &
+	   play(C,customer,incident_group) &
+	   .my_name(Me)
+	<- .send(C,tell,proof("Wrong timeout"));
+	   println("Proof requested! Failure due to wrong timeout!").
 
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
