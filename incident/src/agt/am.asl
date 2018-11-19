@@ -3,7 +3,6 @@ can_handle(easy_problem).
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch1,ask_description) = What | done(sch1,ask_description,Ag)=What) &
-	   goalState(sch1,have_problem,_,_,satisfied) &
 	   play(Customer,customer,incident_group)
 	<- //println("Asking description...");
 	   //.send(Customer,tell,ask_description);

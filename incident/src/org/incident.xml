@@ -36,9 +36,8 @@
 
 <functional-specification>
     <scheme id="scheme1">
-        <goal id="root1">
+        <goal id="problem_management">
             <plan operator="sequence">
-            	<goal id="have_problem"/>
                 <goal id="ask_description" ttf="5 seconds"/>
                 <goal id="send_description" ttf="5 seconds"/>
                 <goal id="explain_solution" ttf="5 seconds"/>
@@ -50,13 +49,12 @@
             <goal id="explain_solution"/>
         </mission>
         <mission id="m2" min="1" max="1">
-        	<goal id="have_problem"/>
             <goal id="send_description"/>
-            <goal id="root1"/>
+            <goal id="problem_management"/>
         </mission>
     </scheme>
     <scheme id="scheme2">
-       <goal id="root2">
+       <goal id="first_level_management">
            <plan operator="sequence">
                <goal id="ask_support_fls"/>
                <goal id="handle_issue_1"/>
@@ -73,7 +71,7 @@
        </mission>
    </scheme>
    <scheme id="scheme3">
-       <goal id="root3">
+       <goal id="second_level_management">
            <plan operator="sequence">
                <goal id="ask_support_sls"/>
                <goal id="handle_issue_2"/>
@@ -88,7 +86,7 @@
            <goal id="provide_feedback_fls"/>
        </mission>
    </scheme>
-   <scheme id="scheme4">
+   <scheme id="third_level_management">
        <goal id="root4">
            <plan operator="sequence">
                <goal id="ask_support_dev"/>
