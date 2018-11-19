@@ -32,35 +32,12 @@
 	   //.send(Am,tell,description(hard_problem));
 	   //goalAchieved(send_description)[artifact_id(ArtId)].
 	   println("Cannot send description :(").
-	
-+requestProof(obligation(Me,_,done(_,send_description,Me),_))[source(am)]
-	 : goalState(sch1,have_problem,_,_,satisfied) &
-	   goalState(sch1,ask_description,_,_,satisfied) &
-	   obligationUnfulfilled(obligation(Me,_,done(_,send_description,Me),_)) &
-	   play(Am,key_account_manager,incident_group) &
-	   .my_name(Me)
-	<- .send(Am,tell,proof("System failure"));
-	   println("Proof requested! Failure due to system fault!").
-
-+requestProof(obligation(Me,_,done(_,send_description,Me),_))[source(boss)]
-	 : goalState(sch1,have_problem,_,_,satisfied) &
-	   goalState(sch1,ask_description,_,_,satisfied) &
-	   obligationUnfulfilled(obligation(Me,_,done(_,send_description,Me),_)) &
-	   play(Bo,boss,incident_group) &
-	   .my_name(Me)
-	<- .send(Bo,tell,proof("System failure"));
-	   println("Proof requested! Failure due to system fault!").
 
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
      : .my_name(Ag) &
 	   (satisfied(sch1,root1) = What | done(sch1,root1,Ag)=What)
 	<- println("Problem solved. Thank you!")
 	   goalAchieved(root1)[artifact_id(ArtId)].
-	   
-+obligationUnfulfilled(obligation(am,X,done(Y,ask_description,am),Z))
-	 : goalState(sch1,have_problem,_,_,satisfied)
-	<- println("Obligation to ask_description unfulfilled by am. Asking why...");
-	   .send(am,tell,requestProof(obligation(am,X,done(Y,ask_description,am),Z))).
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }

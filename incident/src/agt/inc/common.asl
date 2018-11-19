@@ -41,6 +41,3 @@
       .intend(Goal)
    <- .print("I am not obliged to ",Goal," anymore, dropping the intention.");
       .drop_intention(Goal).
-      
-+oblUnfulfilled(O)
-	<- +obligationUnfulfilled(O).

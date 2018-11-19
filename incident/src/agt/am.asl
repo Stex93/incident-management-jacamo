@@ -1,28 +1,21 @@
 can_handle(easy_problem).
 
-+obligationUnfulfilled(obligation(c,X,done(Y,send_description,c),Z))
-	 : goalState(sch1,have_problem,_,_,satisfied) &
-	   goalState(sch1,ask_description,_,_,satisfied)
-	<- println("Obligation to send_description unfulfilled by c. Asking why...");
-	   .send(c,tell,requestProof(obligation(c,X,done(Y,send_description,c),Z))).
-
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch1,ask_description) = What | done(sch1,ask_description,Ag)=What) &
 	   goalState(sch1,have_problem,_,_,satisfied) &
 	   play(Customer,customer,incident_group)
-	<- println("Asking description...");
-	   .send(Customer,tell,ask_description);
-	   goalAchieved(ask_description)[artifact_id(ArtId)].
-	   //println("Cannot ask for description").
-
-+requestProof(obligation(Me,_,done(_,ask_description,Me),_))
-	 : goalState(sch1,have_problem,_,_,satisfied) &
-	   obligationUnfulfilled(obligation(Me,_,done(_,ask_description,Me),_)) &
-	   play(C,customer,incident_group) &
-	   .my_name(Me)
-	<- .send(C,tell,proof("Wrong timeout"));
-	   println("Proof requested! Failure due to wrong timeout!").
+	<- //println("Asking description...");
+	   //.send(Customer,tell,ask_description);
+	   //goalAchieved(ask_description)[artifact_id(ArtId)].
+	   println("Cannot ask for description").
+	   
++oblUnfulfilled(O)
+	 : .my_name(Ag) &
+	   obligation(Ag,_,What,_) = O &
+	   (satisfied(sch1,ask_description) = What | done(sch1,ask_description,Ag)=What) &
+	   goalState(sch1,have_problem,_,_,satisfied)
+	<- println("Explaining why I couldn't ask description").
 
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
@@ -57,7 +50,16 @@ can_handle(easy_problem).
        ?goalState(sch2,provide_feedback_am,_,_,satisfied)[artifact_id(SchArtId)];
        println("Explaining solution...");
        goalAchieved(explain_solution)[artifact_id(ArtId)].
-       
+
++oblUnfulfilled(O)
+	 : .my_name(Ag) &
+	   obligation(Ag,_,What,_) = O &
+	   (satisfied(sch1,explain_solution) = What | done(sch1,explain_solution,Ag)=What) &
+	   goalState(sch1,have_problem,_,_,satisfied) &
+	   goalState(sch1,ask_description,_,_,satisfied) &
+	   goalState(sch1,send_description,_,_,satisfied)
+	<- println("Explaining why I couldn't explain solution").
+
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch2,ask_support_fls) = What | done(sch2,ask_support_fls,Ag)=What) &
