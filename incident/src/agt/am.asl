@@ -4,22 +4,20 @@ can_handle(easy_problem).
 	 : .my_name(Ag) &
 	   (satisfied(sch1,ask_description) = What | done(sch1,ask_description,Ag)=What) &
 	   play(Customer,customer,incident_group)
-	<- //println("Asking description...");
-	   //.send(Customer,tell,ask_description);
-	   //goalAchieved(ask_description)[artifact_id(ArtId)].
-	   println("Cannot ask for description").
+	<- println("Asking description...");
+	   .send(Customer,tell,ask_description);
+	   goalAchieved(ask_description)[artifact_id(ArtId)].
+	   //println("Cannot ask for description").
 	   
 +oblUnfulfilled(O)
 	 : .my_name(Ag) &
 	   obligation(Ag,_,What,_) = O &
-	   (satisfied(sch1,ask_description) = What | done(sch1,ask_description,Ag)=What) &
-	   goalState(sch1,have_problem,_,_,satisfied)
+	   (satisfied(sch1,ask_description) = What | done(sch1,ask_description,Ag)=What)
 	<- println("Explaining why I couldn't ask description").
 
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch1,explain_solution) = What | done(sch1,explain_solution,Ag)=What) &
-	   goalState(sch1,have_problem,_,_,satisfied) &
 	   goalState(sch1,ask_description,_,_,satisfied) &
 	   goalState(sch1,send_description,_,_,satisfied) &
 	   play(Customer,customer,incident_group) &
@@ -32,7 +30,6 @@ can_handle(easy_problem).
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch1,explain_solution) = What | done(sch1,explain_solution,Ag)=What) &
-	   goalState(sch1,have_problem,_,_,satisfied) &
 	   goalState(sch1,ask_description,_,_,satisfied) &
 	   goalState(sch1,send_description,_,_,satisfied) &
 	   play(Customer,customer,incident_group) &
@@ -54,7 +51,6 @@ can_handle(easy_problem).
 	 : .my_name(Ag) &
 	   obligation(Ag,_,What,_) = O &
 	   (satisfied(sch1,explain_solution) = What | done(sch1,explain_solution,Ag)=What) &
-	   goalState(sch1,have_problem,_,_,satisfied) &
 	   goalState(sch1,ask_description,_,_,satisfied) &
 	   goalState(sch1,send_description,_,_,satisfied)
 	<- println("Explaining why I couldn't explain solution").
@@ -62,13 +58,20 @@ can_handle(easy_problem).
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch2,ask_support_fls) = What | done(sch2,ask_support_fls,Ag)=What) &
-	   goalState(sch1,have_problem,_,_,satisfied) &
 	   goalState(sch1,ask_description,_,_,satisfied) &
 	   goalState(sch1,send_description,_,_,satisfied) &
 	   play(Fls,first_level_support,incident_group)
 	<- println("Asking first level support...");
 	   .send(Fls,tell,ask_support_fls);
 	   goalAchieved(ask_support_fls)[artifact_id(ArtId)].
+
++oblUnfulfilled(O)
+	 : .my_name(Ag) &
+	   obligation(Ag,_,What,_) = O &
+	   (satisfied(sch2,ask_support_fls) = What | done(sch2,ask_support_fls,Ag)=What) &
+	   goalState(sch1,ask_description,_,_,satisfied) &
+	   goalState(sch1,send_description,_,_,satisfied)
+	<- println("Explaining why I couldn't achieve ask_support_fls").
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }

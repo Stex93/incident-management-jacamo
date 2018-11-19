@@ -1,7 +1,8 @@
 
 +play(Me,customer,_)
 	 : .my_name(Me)
-	<- !solve_a_problem.
+	<- .wait(100);
+	   !solve_a_problem.
 
 +!solve_a_problem
 	 : orgArt(OrgArtId) &
@@ -22,23 +23,22 @@
 	   play(Am,key_account_manager,incident_group)
 	<- println("Sending description...");
 	   //.send(Am,tell,description(easy_problem));
-	   //.send(Am,tell,description(hard_problem));
-	   //goalAchieved(send_description)[artifact_id(ArtId)].
-	   println("Cannot send description :(").
+	   .send(Am,tell,description(hard_problem));
+	   goalAchieved(send_description)[artifact_id(ArtId)].
+	   //println("Cannot send description :(").
 	   
 +oblUnfulfilled(O)
 	 : .my_name(Ag) &
 	   obligation(Ag,_,What,_) = O &
 	   (satisfied(sch1,send_description) = What | done(sch1,send_description,Ag)=What) &
-	   goalState(sch1,have_problem,_,_,satisfied) &
 	   goalState(sch1,ask_description,_,_,satisfied)
 	<- println("Obligation to send_description unfulfilled. System error!").
 
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
      : .my_name(Ag) &
-	   (satisfied(sch1,root1) = What | done(sch1,root1,Ag)=What)
+	   (satisfied(sch1,problem_management) = What | done(sch1,problem_management,Ag)=What)
 	<- println("Problem solved. Thank you!")
-	   goalAchieved(root1)[artifact_id(ArtId)].
+	   goalAchieved(problem_management)[artifact_id(ArtId)].
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }

@@ -7,7 +7,14 @@
 	   //+result(ok);
 	   +result(bad);
 	   goalAchieved(handle_issue_1)[artifact_id(ArtId)].
-	
+
++oblUnfulfilled(O)
+	 : .my_name(Ag) &
+	   obligation(Ag,_,What,_) = O &
+	   (satisfied(sch2,handle_issue_1) = What | done(sch2,handle_issue_1,Ag)=What) &
+	   goalState(sch2,ask_support_fls,_,_,satisfied)
+	<- println("Explaining why I couldn't achieve handle_issue_1").
+
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch2,provide_feedback_am) = What | done(sch2,provide_feedback_am,Ag)=What) &
@@ -38,7 +45,15 @@
 	   println("Providing feedback to key account manager...");
 	   .send(Am,tell,provide_feedback_am);
 	   goalAchieved(provide_feedback_am)[artifact_id(ArtId)].
-	
+
++oblUnfulfilled(O)
+	 : .my_name(Ag) &
+	   obligation(Ag,_,What,_) = O &
+	   (satisfied(sch2,provide_feedback_am) = What | done(sch2,provide_feedback_am,Ag)=What) &
+	   goalState(sch2,ask_support_fls,_,_,satisfied) &
+	   goalState(sch2,handle_issue_1,_,_,satisfied)
+	<- println("Explaining why I couldn't achieve provide_feedback_am").
+
 +obligation(Ag,_,What,_)[artifact_id(ArtId)]
 	 : .my_name(Ag) &
 	   (satisfied(sch3,ask_support_sls) = What | done(sch3,ask_support_sls,Ag)=What) &
@@ -48,6 +63,14 @@
 	<- println("Asking second level support...");
 	   .send(Sls,tell,ask_support_sls);
 	   goalAchieved(ask_support_sls)[artifact_id(ArtId)].
+	   
++oblUnfulfilled(O)
+	 : .my_name(Ag) &
+	   obligation(Ag,_,What,_) = O &
+	   (satisfied(sch2,ask_support_sls) = What | done(sch2,ask_support_sls,Ag)=What) &
+	   goalState(sch2,ask_support_fls,_,_,satisfied) &
+	   goalState(sch2,handle_issue_1,_,_,satisfied)
+	<- println("Explaining why I couldn't achieve ask_support_sls").
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }
